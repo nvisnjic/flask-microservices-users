@@ -1,19 +1,37 @@
 # manage.py
 
-
 from flask_script import Manager
 
-from project import app, db
+from project import create_app, db
+from project.api.models import User
 
+import unittest
 
+app = create_app()
 manager = Manager(app)
 
 @manager.command
+def seed_db():
+    """Seeds the database."""
+    db.session.add(User(username='michael', email="michael@realpython.com"))
+    db.session.add(User(username='michaelherman', email="michael@mherman.org"))
+    db.session.commit()
+
+@manager.command
 def recreate_db():
-    """recreates database."""
+    """Recreates database."""
     db.drop_all()
     db.create_all()
     db.session.commit()
+
+@manager.command
+def test():
+    """Runs tests without code coverage."""
+    tests = unittest.TestLoader().discover('project/tests', pattern='test*.py')
+    result = unittest.TextTestRunner(verbosity=2).run(tests)
+    if result.wasSuccessful():
+        return 0
+    return 1
 
 if __name__ == '__main__':
     manager.run()
