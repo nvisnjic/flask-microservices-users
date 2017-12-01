@@ -19,6 +19,7 @@ def ping_pong():
         'message': 'pong!'
         })
 
+'''
 @users_blueprint.route('/', methods=['GET', 'POST'])
 def index(name=None):
     if request.method == 'POST':
@@ -28,6 +29,7 @@ def index(name=None):
         db.session.commit()
     users = User.query.order_by(User.created_at.desc()).all()
     return render_template('index.html', name=name, users=users)
+'''
 
 @users_blueprint.route('/users', methods=['POST'])
 def add_user():
@@ -99,7 +101,7 @@ def get_single_user(user_id):
 @users_blueprint.route('/users', methods=['GET'])
 def get_all_users():
     """Get all users"""
-    users = User.query.all()
+    users = User.query.order_by(User.created_at.desc()).all()
     users_list = []
     for user in users:
         user_object = {
