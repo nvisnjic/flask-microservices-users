@@ -1,15 +1,13 @@
 # manage.py
 
 from flask_script import Manager
+from flask_migrate import MigrateCommand
 
 from project import create_app, db
 from project.api.models import User
 
 import unittest
 import coverage
-
-app = create_app()
-manager = Manager(app)
 
 COV = coverage.coverage(
     branch=True,
@@ -19,6 +17,11 @@ COV = coverage.coverage(
     ]
 )
 COV.start()
+
+app = create_app()
+manager = Manager(app)
+
+manager.add_command('db', MigrateCommand)
 
 @manager.command
 def seed_db():
