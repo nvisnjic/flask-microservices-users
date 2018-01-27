@@ -26,8 +26,16 @@ manager.add_command('db', MigrateCommand)
 @manager.command
 def seed_db():
     """Seeds the database."""
-    db.session.add(User(username='michael', email="michael@realpython.com"))
-    db.session.add(User(username='michaelherman', email="michael@mherman.org"))
+    db.session.add(User(
+        username='michael',
+        email="michael@realpython.com",
+        password='jordan'
+    ))
+    db.session.add(User(
+        username='michaelherman',
+        email="michael@mherman.org",
+        password='mickymike'
+    ))
     db.session.commit()
 
 @manager.command

@@ -27,6 +27,15 @@ class User(db.Model):
                 current_app.config.get('BCRYPT_LOG_ROUNDS')).decode()
         self.created_at = created_at
 
+    def to_json(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'active': self.active,
+            'admin': self.admin
+        }
+
     def encode_auth_token(self, user_id):
         """Generates the auth token"""
         try:

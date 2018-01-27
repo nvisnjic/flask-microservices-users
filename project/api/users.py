@@ -1,4 +1,4 @@
-# project/api/views.py
+# project/api/users.py
 import unittest
 
 
@@ -9,9 +9,10 @@ from project import db
 
 from sqlalchemy import exc
 
-users_blueprint = Blueprint('users', __name__, template_folder='./templates')
+users_blueprint = Blueprint('users', __name__)
 
 
+'''
 @users_blueprint.route('/ping', methods=['GET'])
 def ping_pong():
     return jsonify({
@@ -19,7 +20,6 @@ def ping_pong():
         'message': 'pong!'
         })
 
-'''
 @users_blueprint.route('/', methods=['GET', 'POST'])
 def index(name=None):
     if request.method == 'POST':
@@ -30,6 +30,7 @@ def index(name=None):
     users = User.query.order_by(User.created_at.desc()).all()
     return render_template('index.html', name=name, users=users)
 '''
+
 
 @users_blueprint.route('/users', methods=['POST'])
 def add_user():
